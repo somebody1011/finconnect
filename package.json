@@ -1,0 +1,38 @@
+{
+  "name": "finconnect",
+  "version": "1.0.0",
+  "description": "Unified Fintech Wrapper (Node.js + TypeScript)A lightweight, provider-agnostic integration wrapper for East African Fintech APIs.",
+  "homepage": "https://github.com/somebody1011/finconnect#readme",
+  "bugs": {
+    "url": "https://github.com/somebody1011/finconnect/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somebody1011/finconnect.git"
+  },
+  "license": "ISC",
+  "author": "elisha gerson",
+  "type": "module",
+  "main": "index.ts",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.15.2",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "axios-mock-adapter": "^2.1.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

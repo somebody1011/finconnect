@@ -25,11 +25,11 @@ export class ClickpesaProvider extends baseProvider {
     }
   }
 
-  async requestPayment(payload: any): Promise<any> {
+  async initiateUssdPushRequest(payload: any): Promise<any> {
     try {
       const token = await this.authenticate();
       const response = await axios.post(
-        `${this.config.baseUrl}/payments`,
+        `${this.config.baseUrl}/third-parties/payments/initiate-ussd-push-request`,
         payload,
         {
           headers: {

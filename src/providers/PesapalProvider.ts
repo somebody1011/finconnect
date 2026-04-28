@@ -9,7 +9,7 @@ export class PesapalProvider extends baseProvider {
     async authenticate(): Promise<string> {
         try {
             const response = await axios.post(
-                `${this.config.baseUrl}pesapalv3/api/Auth/RequestToken`,
+                `${this.config.baseUrl}/api/Auth/RequestToken`,
                 {
                     consumer_key: this.config.PESAPAL_CONSUMER_KEY,
                     consumer_secret: this.config.PESAPAL_CONSUMER_SECRET,
@@ -31,10 +31,10 @@ async registerIpn(ipnUrl: string, ipnNotificationType: "GET" | "POST"): Promise<
         try {
             const token = await this.authenticate();
             const response = await axios.post(
-                `${this.config.baseUrl}/pesapalv3/api/URLSetup/RegisterIPN`, // sandbox path
+                `${this.config.baseUrl}/api/URLSetup/RegisterIPN`, // sandbox path
                 {
                     url: ipnUrl,
-                    ipnNotificationType: ipnNotificationType
+                    ipn_notification_type: ipnNotificationType
                 },
                 {
                     headers: {
@@ -59,7 +59,7 @@ async registerIpn(ipnUrl: string, ipnNotificationType: "GET" | "POST"): Promise<
                 notification_id: ipnId 
             };
             const response = await axios.post(
-                `${this.config.baseUrl}pesapalv3/api/Transactions/SubmitOrderRequest`,
+                `${this.config.baseUrl}/api/Transactions/SubmitOrderRequest`,
                 finalPayload,
                 {
                     headers: {

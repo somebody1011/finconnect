@@ -121,10 +121,10 @@ processPayment();
 
 | Provider | Status | Auth Method | Region(s) |
 |----------|--------|-------------|-----------|
-| **M-Pesa** | ✅ Active | OAuth2 | Kenya, Tanzania |
-| **AzamPay** | ✅ Active | Bearer/Secret | Tanzania |
-| **ClickPesa** | ✅ Active | JWT | East Africa |
-| **Airtel Money** | 🛠️ Coming Soon | — | East Africa |
+| **ClickPesa** |🚧 Onprogress | JWT | East Africa |
+| **M-Pesa** | 📋 Planned| OAuth2 | Kenya, Tanzania |
+| **AzamPay** |  📋 Planned   | Bearer/Secret | Tanzania |
+| **Airtel Money** | 📋 Planned | — | East Africa |
 | **Tigopesa** | 📋 Planned | — | Tanzania |
 
 ---
@@ -237,9 +237,9 @@ const gateway = new FintechGateway('mpesa', {
 
 ## 🗺️ Roadmap
 
-- [x] M-Pesa integration
-- [x] AzamPay integration
 - [x] ClickPesa integration
+- [ ] M-Pesa integration
+- [ ] AzamPay integration
 - [ ] Add B2C (Business to Customer) support
 - [ ] Implement automatic retry logic for failed API calls
 - [ ] Add comprehensive unit tests using Jest

@@ -1,9 +1,12 @@
 import { PesapalProvider } from '../src/providers/PesapalProvider';
+import { ClickpesaProvider } from '../src/providers/ClickpesaProvider';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-async function main() {
+async function testPesapal() {
+  //pesapal test credentials
+
   // Initialize the provider with test credentials
   const pesapal = new PesapalProvider({baseUrl:process.env.PESAPAL_BASE_URL, PESAPAL_CONSUMER_KEY:process.env.PESAPAL_CONSUMER_KEY,PESAPAL_CONSUMER_SECRET:process.env.PESAPAL_CONSUMER_SECRET});
 
@@ -44,4 +47,34 @@ async function main() {
   }
 }
 
-main();
+//clickpesa test credentials
+
+const clickpesa= new ClickpesaProvider({baseUrl:process.env.CLICKPESA_BASE_URL, CLICKPESA_CLIENT_ID:process.env.CLICKPESA_CLIENT_ID, CLICKPESA_API_KEY:process.env.CLICKPESA_API_KEY});
+
+const clickpesaPayload = {
+    amount: '1000',
+    currency: 'TZS',
+    orderReference: 'COO1',
+    phoneNumber: '255675724119',//Start with country code, no plus sign or leading zeros
+    // checksum: '<string>'
+
+};
+
+async function testClickpesa() {
+  try {
+    console.log('Initiating Clickpesa USSD Push...');
+    const response = await clickpesa.initiateUssdPushRequest(clickpesaPayload);
+    console.log('Clickpesa USSD Push Response:', response);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error:', error.message);
+    } else {
+      console.error('Error:', error);
+    }
+  }
+}
+
+// Uncomment the following line to test desired method
+// testClickpesa();
+
+// testPesapal();

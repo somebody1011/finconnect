@@ -16,7 +16,7 @@
 
 ## Overview
 
-FinConnect is a lightweight, provider-agnostic integration wrapper that simplifies payment processing across multiple East African fintech platforms. Instead of managing different authentication flows, payload structures, and error handling for each provider, FinConnect provides a **single, unified API** for M-Pesa, AzamPay, ClickPesa, and more.
+FinConnect is a lightweight, provider-agnostic integration wrapper that simplifies payment processing across multiple East African fintech platforms. Instead of managing different authentication flows, payload structures, and error handling for each provider, FinConnect provides a **single, unified API** for PesaPal, AzamPay, ClickPesa, and more.
 
 ### The Problem We Solve
 
@@ -35,7 +35,7 @@ FinConnect eliminates this complexity with a consistent, developer-friendly inte
 - 🔌 **Provider-Agnostic API** - Single interface for multiple payment providers
 - 🔐 **Multi-Auth Support** - OAuth2, JWT, Bearer tokens handled transparently
 - ⚡ **Type-Safe** - Full TypeScript support with complete type definitions
-- 🌍 **Regional Coverage** - M-Pesa (Kenya/Tanzania), AzamPay (Tanzania), ClickPesa (East Africa)
+- 🌍 **Regional Coverage** - PesaPal (East Africa), AzamPay (Tanzania), ClickPesa (East Africa)
 - 🛡️ **Error Handling** - Consistent error messages and status tracking
 - 🔄 **Async/Await Ready** - Modern async patterns throughout
 - 📝 **Well-Documented** - Comprehensive examples and API documentation
@@ -67,10 +67,10 @@ npm install
 Create a `.env` file in your root directory with your provider credentials:
 
 ```env
-# M-Pesa Configuration
-MPESA_APP_KEY=your_key
-MPESA_APP_SECRET=your_secret
-MPESA_SHORT_CODE=174379
+# PesaPal Configuration
+PESAPAL_APP_KEY=your_key
+PESAPAL_APP_SECRET=your_secret
+
 
 # AzamPay Configuration
 AZAMPAY_SECRET=your_secret
@@ -85,10 +85,10 @@ CLICKPESA_API_KEY=your_api_key
 ```typescript
 import { FintechGateway } from './src/FintechGateway';
 
-// Initialize gateway for M-Pesa
-const gateway = new FintechGateway('mpesa', {
-  apiKey: process.env.MPESA_APP_KEY,
-  apiSecret: process.env.MPESA_APP_SECRET,
+// Initialize gateway for pesapal
+const gateway = new FintechGateway('pesapal', {
+  apiKey: process.env.PESAPAL_CONSUMER_KEY,
+  apiSecret: process.env.PESAPAL_CONSUMER_SECRET,
   shortCode: '174379',
   environment: 'sandbox'
 });
@@ -121,11 +121,10 @@ processPayment();
 
 | Provider | Status | Auth Method | Region(s) |
 |----------|--------|-------------|-----------|
-| **ClickPesa** |🚧 Onprogress | JWT | East Africa |
-| **M-Pesa** | 📋 Planned| OAuth2 | Kenya, Tanzania |
+| **ClickPesa** |🚧🛠️ Onprogress | JWT | East Africa |
+| **PesaPal** | 🚧🛠️ Onprogress| OAuth2 | East Africa |
 | **AzamPay** |  📋 Planned   | Bearer/Secret | Tanzania |
-| **Airtel Money** | 📋 Planned | — | East Africa |
-| **Tigopesa** | 📋 Planned | — | Tanzania |
+
 
 ---
 
@@ -140,7 +139,7 @@ new FintechGateway(provider: string, config: ProviderConfig)
 ```
 
 **Parameters:**
-- `provider` - The payment provider identifier ('mpesa', 'azampay', 'clickpesa')
+- `provider` - The payment provider identifier ('pesapal', 'azampay', 'clickpesa')
 - `config` - Provider-specific configuration object
 
 #### Methods
@@ -227,9 +226,9 @@ const gateway = new FintechGateway('mpesa', {
 });
 
 // ✅ DO THIS
-const gateway = new FintechGateway('mpesa', {
-  apiKey: process.env.MPESA_APP_KEY,
-  apiSecret: process.env.MPESA_APP_SECRET
+const gateway = new FintechGateway('pesapal', {
+  apiKey: process.env.PESAPAL_CONSUMER_KEY,
+  apiSecret: process.env.PESAPAL_CONSUMER_SECRET
 });
 ```
 
@@ -238,7 +237,7 @@ const gateway = new FintechGateway('mpesa', {
 ## 🗺️ Roadmap
 
 - [x] ClickPesa integration
-- [ ] M-Pesa integration
+- [x] PesaPal integration
 - [ ] AzamPay integration
 - [ ] Add B2C (Business to Customer) support
 - [ ] Implement automatic retry logic for failed API calls

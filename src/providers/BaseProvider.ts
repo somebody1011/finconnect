@@ -5,5 +5,8 @@ export abstract class baseProvider {
     this.config = config; 
   }
   abstract authenticate(): Promise<string>;
-  abstract requestPayment(payload: any): Promise<any>;
+  abstract initiateUssdPushRequest(params: { payload: any, ipnId?: string }): Promise<any>;
+  async registerIpn(_ipnUrl: string, _ipnNotificationType: "GET" | "POST"): Promise<any> {
+    throw new Error("IPN registration not supported by this provider");
+  }
 }

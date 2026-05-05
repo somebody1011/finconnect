@@ -83,7 +83,7 @@ CLICKPESA_API_KEY=your_api_key
 ### Basic Usage
 
 ```typescript
-import { FintechGateway } from './src/FintechGateway';
+import { FintechGateway } from './src/index';
 
 // Initialize gateway for pesapal
 const gateway = new FintechGateway('pesapal', {

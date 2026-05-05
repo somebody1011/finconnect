@@ -1,6 +1,6 @@
-import { baseProvider } from './BaseProvider';
-import { ClickpesaProvider } from './ClickpesaProvider';
-import { PesapalProvider } from './PesapalProvider';
+import { baseProvider } from './providers/BaseProvider.js';
+import { ClickpesaProvider } from './providers/ClickpesaProvider.js';
+import { PesapalProvider } from './providers/PesapalProvider.js';
 
 export enum ProviderType {
   clickpesa = 'clickpesa',

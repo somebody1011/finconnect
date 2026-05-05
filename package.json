@@ -13,12 +13,14 @@
   "license": "ISC",
   "author": "elisha gerson",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "example": "examples",
     "test": "test"
   },
   "scripts": {
+    "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node scripts/server.ts",
     "dev-tool": "tsx scripts/dev-tool.ts",

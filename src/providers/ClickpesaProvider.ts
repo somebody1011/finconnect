@@ -1,5 +1,5 @@
 // import process from "process";import { baseProvider } from "./BaseProvider";
-import { baseProvider } from "./BaseProvider";
+import { baseProvider } from "./BaseProvider.js";
 import axios from "axios";
 
 export class ClickpesaProvider extends baseProvider {
@@ -22,7 +22,7 @@ export class ClickpesaProvider extends baseProvider {
           },
         }
       );
-      console.log('Authentication response:', response.data);
+      // console.log('Authentication response:', response.data);
       return response.data.token;
     } catch (error) {
       throw new Error(`Authentication failed: ${error}`);
@@ -32,8 +32,7 @@ export class ClickpesaProvider extends baseProvider {
   async initiateUssdPushRequest(payload: any): Promise<any> {
     try {
       const token = await this.authenticate();
-      console.log(token)
-      console.log('Initiating USSD Push with payload:', payload);
+      // console.log('Initiating USSD Push with payload:', payload);
       const response = await axios.post(
         `${this.config.baseUrl}/third-parties/payments/initiate-ussd-push-request`,
         payload,

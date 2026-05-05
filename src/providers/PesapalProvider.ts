@@ -1,4 +1,4 @@
-import {baseProvider} from './BaseProvider';
+import {baseProvider} from './BaseProvider.js';
 import axios from 'axios';
 
 export class PesapalProvider extends baseProvider {

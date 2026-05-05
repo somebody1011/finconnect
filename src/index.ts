@@ -2,7 +2,7 @@ import { baseProvider } from './providers/BaseProvider.js';
 import { ClickpesaProvider } from './providers/ClickpesaProvider.js';
 import { PesapalProvider } from './providers/PesapalProvider.js';
 
-export enum ProviderType {
+enum ProviderType {
   clickpesa = 'clickpesa',
   pesapal = 'pesapal',
 }

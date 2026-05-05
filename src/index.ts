@@ -7,7 +7,7 @@ enum ProviderType {
   pesapal = 'pesapal',
 }
 
-export class ProviderFactory {
+class ProviderFactory {
   /**
    * Factory method to create a specific provider instance.
    * 

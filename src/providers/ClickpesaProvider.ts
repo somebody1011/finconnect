@@ -1,29 +1,28 @@
-// import process from "process";import { baseProvider } from "./BaseProvider";
 import { baseProvider } from "./BaseProvider.js";
 import axios from "axios";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export class ClickpesaProvider extends baseProvider {
   constructor(config: any) {
     super(config);
   }
 
-  async authenticate(): Promise<string> {
-   
+    async authenticate(): Promise<string> {
     try {
       const response = await axios.post(
-        `${this.config.baseUrl}/third-parties/generate-token`,
+        `${this.config.baseUrl}/generate-token`, // Resolves cleanly to https://clickpesa.com
         {},
         {
           headers: {
-            'client-id':this.config.CLICKPESA_CLIENT_ID,                  
-            'api-key':this.config.CLICKPESA_API_KEY,
-            
+            'client-id': this.config.CLICKPESA_CLIENT_ID,                  
+            'api-key': this.config.CLICKPESA_API_KEY,
             "Content-Type": "application/json",
           },
         }
       );
-      // console.log('Authentication response:', response.data);
-      return response.data.token;
+      return response.data;
     } catch (error) {
       throw new Error(`Authentication failed: ${error}`);
     }
@@ -32,30 +31,51 @@ export class ClickpesaProvider extends baseProvider {
   async initiateUssdPushRequest(payload: any): Promise<any> {
     try {
       const token = await this.authenticate();
-      // console.log('Initiating USSD Push with payload:', payload);
       const response = await axios.post(
-        `${this.config.baseUrl}/third-parties/payments/initiate-ussd-push-request`,
+        `${this.config.baseUrl}/third-parties/payments/initiate-ussd-push-request`, // Added /third-parties/
         payload,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            "Authorization": token, 
           },
         }
       );
       return response.data;
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('USSD Push Error:', error.response?.data || error.message);
       throw new Error(`Payment request failed: ${error.response?.data?.message || error.message}`);
     }
   } 
+
+  async checkPaymentStatus(params: { transactionId: string }): Promise<any> {
+    try {
+      const token = await this.authenticate();
+      const response = await axios.get(
+        `${this.config.baseUrl}/third-parties/payments/${params.transactionId}`, // Added /third-parties/
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(`Payment status check failed: ${error}`);
+    }
+  }
 }
 
-// async function testClickpesa() {
-//     const clickpesa= new ClickpesaProvider({baseUrl:process.env.CLICKPESA_BASE_URL, CLICKPESA_CLIENT_ID:'IDASutx1B6DxrlN6YeI2E2icl3JaNMNx', CLICKPESA_API_KEY:'SKWLtYfKZveyxodfO0geynsUzoVqjZk5A0HAcJe5e8'});
-//     const auth = await clickpesa.authenticate();
-//     console.log('Auth token:', auth);
+async function testClickpesa() {
+    const clickpesa = new ClickpesaProvider({
+        baseUrl: process.env.CLICKPESA_BASE_URL, 
+        CLICKPESA_CLIENT_ID: process.env.CLICKPESA_CLIENT_ID, 
+        CLICKPESA_API_KEY: process.env.CLICKPESA_API_KEY
+    });
+    const auth = await clickpesa.authenticate();
+    console.log('Auth token:', auth);
+}
 
-// }
-
-// // testClickpesa()
+testClickpesa();

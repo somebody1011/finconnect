@@ -6,6 +6,7 @@ export abstract class baseProvider {
   }
   abstract authenticate(): Promise<string>;
   abstract initiateUssdPushRequest(params: { payload: any, ipnId?: string }): Promise<any>;
+  abstract checkPaymentStatus(params:{transactionId:string}): Promise<any>;
   async registerIpn(_ipnUrl: string, _ipnNotificationType: "GET" | "POST"): Promise<any> {
     throw new Error("IPN registration not supported by this provider");
   }

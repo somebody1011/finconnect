@@ -74,4 +74,24 @@ async registerIpn(ipnUrl: string, ipnNotificationType: "GET" | "POST"): Promise<
             throw new Error(`Payment request failed: ${error}`);
         }
     }
+
+    async checkPaymentStatus(params:{transactionId:string}): Promise<any>{
+        try {
+            const token = await this.authenticate();
+            const response = await axios.get(
+                `${this.config.baseUrl}/api/Transactions/GetTransactionStatus?orderTrackingId=${params.transactionId}`,
+            
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            throw new Error(`Payment status check failed: ${error}`);
+        }
+    }
 }

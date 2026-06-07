@@ -1,11 +1,15 @@
 import { baseProvider } from './providers/BaseProvider.js';
 import { ClickpesaProvider } from './providers/ClickpesaProvider.js';
 import { PesapalProvider } from './providers/PesapalProvider.js';
+import { AzampayProvider } from './providers/AzampayProvider.js';
 
-enum ProviderType {
-  clickpesa = 'clickpesa',
-  pesapal = 'pesapal',
-}
+export const ProviderType = {
+  clickpesa: 'clickpesa',
+  pesapal: 'pesapal',
+  azampay: 'azampay',
+} as const;
+
+export type ProviderType = typeof ProviderType[keyof typeof ProviderType];
 
 class ProviderFactory {
   /**
@@ -30,6 +34,12 @@ class ProviderFactory {
           throw new Error("Invalid configuration: Missing required fields for Pesapal.");
         }
         return new PesapalProvider(config);
+
+      case ProviderType.azampay:
+        if (!config || !config.baseUrl || !config.AZAMPAY_APP_NAME || !config.AZAMPAY_CONSUMER_KEY || !config.AZAMPAY_CONSUMER_SECRET) {
+          throw new Error("Invalid configuration: Missing required fields for Azampay.");
+        }
+        return new AzampayProvider(config);
 
       default:
         // Security: Fail securely if an unknown provider is requested.
@@ -56,9 +66,23 @@ export class FintechSDK {
     if (this.gateway instanceof PesapalProvider) {
       // Pesapal expects an object with payload and ipnId
       return this.gateway.initiateUssdPushRequest({ payload: data, ipnId });
+    } else if (this.gateway instanceof AzampayProvider) {
+      // Azampay expects an object with payload
+      return this.gateway.initiateUssdPushRequest({ payload: data });
     } else {
       // Clickpesa and others expect the raw payload directly
       return this.gateway.initiateUssdPushRequest(data);
     }
+  }
+
+  async checkPaymentStatus(transactionId: string) {
+    return this.gateway.checkPaymentStatus({ transactionId });
+  }
+
+  async handleCallback(callbackData: any) {
+    if (this.gateway instanceof AzampayProvider) {
+      return this.gateway.handleCallback(callbackData);
+    }
+    throw new Error(`Callback handling is not supported for provider ${this.gateway.constructor.name}`);
   }
 }

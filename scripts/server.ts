@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-// import { PesapalProvider } from '../src/providers/PesapalProvider';
+import { FintechSDK } from '../src/index.js';
 
 dotenv.config();
 
@@ -14,6 +14,43 @@ app.use(express.json());
 //   PESAPAL_CONSUMER_KEY: process.env.PESAPAL_CONSUMER_KEY || '',
 //   PESAPAL_CONSUMER_SECRET: process.env.PESAPAL_CONSUMER_SECRET || '',
 // });
+
+const fintechSDK = new FintechSDK({
+  provider: 'azampay',
+  config: {
+    baseUrl: process.env.AZAMPAY_BASE_URL || 'https://sandbox.azampay.co.tz',
+    AZAMPAY_APP_NAME: process.env.AZAMPAY_APP_NAME,
+    AZAMPAY_CONSUMER_KEY: process.env.AZAMPAY_CLIENT_ID,
+    AZAMPAY_CONSUMER_SECRET: process.env.AZAMPAY_API_KEY
+  }
+});
+
+// IMPORTANT: Make sure to update your AZAMPAY_CALLBACK_URL in the AzamPay Portal
+// to point to your ngrok URL with this exact path, e.g.,
+// https://ayla-soarable-interspersedly.ngrok-free.dev/azampay/callback
+app.post('/azampay/callback', async (req, res) => {
+  console.log('Received AzamPay Callback:', req.body);
+  try {
+    // This will fetch the public key and verify the signature automatically
+    const result = await fintechSDK.handleCallback(req.body);
+    
+    if (result.isValid) {
+      const transactionData = result.data;
+      console.log('✅ Payment Signature Verified!', transactionData);
+      
+      // TODO: Update your database using transactionData
+      // Example: await updateOrder(transactionData.utilityref, transactionData.transactionstatus);
+      
+      res.status(200).send('OK');
+    } else {
+      console.error('❌ Invalid signature received in callback');
+      res.status(400).send('Invalid Signature');
+    }
+  } catch (error: any) {
+    console.error('Callback processing error:', error.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 app.get('/ipn', async (req, res) => {
   try {

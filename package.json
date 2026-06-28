@@ -1,6 +1,6 @@
 {
   "name": "finconnect",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A lightweight, provider-agnostic integration wrapper for East African Fintech APIs.",
   "homepage": "https://github.com/somebody1011/finconnect#readme",
   "bugs": {

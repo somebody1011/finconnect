@@ -2,6 +2,7 @@ node_modules
 dist
 build
 coverage
+examples
 .env
 *.log
 *.tsbuildinfo
@@ -9,3 +10,5 @@ coverage
 .vscode
 .DS_Store
 *.pem  
+.qodo
+scratch*

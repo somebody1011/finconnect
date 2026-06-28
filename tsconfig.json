@@ -7,9 +7,9 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
+    "module": "Node16",
     "target": "esnext",
-    "types": ["jest"],
+    "types": ["jest", "node"],
     
     // For nodejs:
     // "lib": ["esnext"],
@@ -41,7 +41,7 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     // "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*"]

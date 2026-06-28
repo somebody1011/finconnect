@@ -68,14 +68,3 @@ export class ClickpesaProvider extends baseProvider {
   }
 }
 
-async function testClickpesa() {
-    const clickpesa = new ClickpesaProvider({
-        baseUrl: process.env.CLICKPESA_BASE_URL, 
-        CLICKPESA_CLIENT_ID: process.env.CLICKPESA_CLIENT_ID, 
-        CLICKPESA_API_KEY: process.env.CLICKPESA_API_KEY
-    });
-    const auth = await clickpesa.authenticate();
-    console.log('Auth token:', auth);
-}
-
-testClickpesa();

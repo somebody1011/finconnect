@@ -1,7 +1,7 @@
 {
   "name": "finconnect",
   "version": "1.0.0",
-  "description": "Unified Fintech Wrapper (Node.js + TypeScript)A lightweight, provider-agnostic integration wrapper for East African Fintech APIs.",
+  "description": "A lightweight, provider-agnostic integration wrapper for East African Fintech APIs.",
   "homepage": "https://github.com/somebody1011/finconnect#readme",
   "bugs": {
     "url": "https://github.com/somebody1011/finconnect/issues"
@@ -10,22 +10,46 @@
     "type": "git",
     "url": "git+https://github.com/somebody1011/finconnect.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "elisha gerson",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "directories": {
     "example": "examples",
     "test": "test"
   },
+  "keywords": [
+    "fintech",
+    "payments",
+    "azampay",
+    "pesapal",
+    "clickpesa",
+    "typescript",
+    "node"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
-    "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "test": "jest --runInBand",
     "dev": "ts-node scripts/server.ts",
     "dev-tool": "tsx scripts/dev-tool.ts",
     "provider-test": "tsx src/providers/ClickpesaProvider.ts",
-    "generate-docs": "node generateApiSchema.cjs"
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
     "axios": "^1.15.2",
@@ -43,5 +67,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

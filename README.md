@@ -52,6 +52,12 @@ FinConnect eliminates this complexity with a consistent, developer-friendly inte
 ### Installation
 
 ```bash
+npm install finconnect
+```
+
+Or from the repository source:
+
+```bash
 # Clone the repository
 git clone https://github.com/somebody1011/finconnect.git
 

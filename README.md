@@ -129,7 +129,9 @@ processPayment();
 |----------|--------|-------------|-----------|
 | **ClickPesa** |🚧🛠️ Onprogress | JWT | East Africa |
 | **PesaPal** | 🚧🛠️ Onprogress| OAuth2 | East Africa |
-| **AzamPay** |  📋 Planned   | Bearer/Secret | Tanzania |
+| **AzamPay** |  🚧🛠️ Onprogress   | Bearer/Secret | Tanzania |
+| **snippe** | 📋 Planned   | Bearer/Secret | Tanzania |
+
 
 
 ---
@@ -194,16 +196,12 @@ const result = await gateway.processPayment({
 ```
 finconnect/
 ├── src/
-│   ├── FintechGateway.ts        # Main gateway class
+│   ├── index.ts        # Main gateway class
 │   ├── providers/
 │   │   ├── BaseProvider.ts      # Abstract base class
 │   │   ├── MpesaProvider.ts     # M-Pesa implementation
 │   │   ├── AzampayProvider.ts   # AzamPay implementation
 │   │   └── ClickpesaProvider.ts # ClickPesa implementation
-│   ├── types/
-│   │   └── index.ts             # TypeScript type definitions
-│   └── utils/
-│       └── errorHandler.ts      # Error handling utilities
 ├── tests/
 │   ├── unit/
 │   └── integration/
@@ -227,7 +225,7 @@ finconnect/
 **Example:**
 ```typescript
 // ❌ DO NOT DO THIS
-const gateway = new FintechGateway('mpesa', {
+const gateway = new FintechGateway('pesapal', {
   apiKey: 'your_actual_key_here'
 });
 
@@ -244,10 +242,10 @@ const gateway = new FintechGateway('pesapal', {
 
 - [x] ClickPesa integration
 - [x] PesaPal integration
-- [ ] AzamPay integration
+- [x] AzamPay integration
+- [x] Add comprehensive unit tests using Jest
 - [ ] Add B2C (Business to Customer) support
 - [ ] Implement automatic retry logic for failed API calls
-- [ ] Add comprehensive unit tests using Jest
 - [ ] Add rate limiting and throttling
 - [ ] Support for transaction status polling
 - [ ] Webhook integration for payment notifications
